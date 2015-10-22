@@ -1,0 +1,56 @@
+﻿@model Store.WebUI.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<div id="hui">
+
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("ProductSummary", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>
+
+</div>
+
+<script type="text/javascript">
+	    $(document).ready(function() {
+	        $(".fancybox").fancybox(
+                {
+                padding: 0
+                });
+	    });
+
+	    function DoAjaxPostAndMore(btnClicked) {
+	        var $form = $("#hui");
+
+	        $.ajax({
+	            type: "POST",
+	            url: $form.attr('action'),
+	            data: $form.serialize(),
+	            error: function (xhr, status, error) {
+	                //do something about the error
+	            },
+	            success: function (response) {
+	                //do something with response
+	                LoadBooks();
+
+	            }
+	        });
+
+	        return false;// if it's a link to prevent post
+
+	    }
+</script>
+
+@section contents{
+    @Styles.Render("~/Content/fancybox")
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/fancybox")   
+}

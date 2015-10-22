@@ -1,0 +1,31 @@
+﻿<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+<div class="btn-group">
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Select a payment method <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="#">PayPal</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Credit card</a></li>
+    </ul>
+</div>
+
+<div id="viewPlaceHolder">
+    @Html.Action("BillingAddressInformation", "PaymentProcessor");
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".dropdown-menu li a").click(function () {
+            var selText = $(this).text();
+            $(this).parents('.btn-group').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+            @*$("#viewPlaceHolder").load(@Url.Action("Checkout", "Cart");*@
+            if(selText=="PayPal")
+                $("#viewPlaceHolder").load(@Url.Content("/PaymentProcessor/BillingAddressInformation");//Url.Action
+            else
+                $("#viewPlaceHolder").load("/PaymentProcessor/BillingAddressInformation");
+        });
+    });
+</script>
